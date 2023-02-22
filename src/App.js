@@ -1,25 +1,183 @@
-import logo from './logo.svg';
-import './App.css';
+/*
+[ 리액트 ]
+- 리액트는 노드js 기반의 웹서버 위에서 동작하고 있는 것임
+- App.js는 리액트 앱의 최상위 컴퍼넌트임
+*/
+/*
+< 동작 순서 >
+1.리액트 앱이 실행되고,
+2.src->index.js가 실행되어 내부에서 'id가 root인 요소'를 찾고,
+  그 요소에다가 'App.js'를 임포트하고(import App from './App' 부분)
+3.public->index.html의 'id가 root인 div 아래'에 있는
+4.그리고, 'App.js' 내부에 있는 '함수 App' 내부의 로직이 실행되는 것
+*/
+/*
+< JSX 문법 >
+- JS와 HTML을 합쳐서 사용할 수 있는 문법
 
+*/
+//- 만약, 깃헙 같은 곳에서 리액트 앱을 내려받았는데, 거기에 '폴더 node_modules'가 없다면, 터미널에서 'npm i'를 입력하면 해당 폴더가 받아짐.
+
+/*
+< 컴퍼넌트가 가지는 대표적인 정적인 데이터 >
+- 객체의 속성 props(properties의 약자)
+
+< 컴퍼넌트가 가지는 대표적인 동적인 데이터 >
+- 상태 state
+ */
+
+
+import MyFooter from "./MyFooter";
+import MyHeader from './MyHeader'
+// import './App.css';
+import Counter from "./Counter";
+import Counter2 from "./Counter2";
+import Container from "./Container";
+
+
+//'컴퍼넌트 App'은 '부모 컴퍼넌트'임.
+//그리고,
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+
+//======================================= js 부분 ===============================================
+
+
+    let name = "조유종";
+
+    //< 'css의 인라인 스타일'을 적용하는 것 >
+    const style = {
+        App: {
+            backgroundColor: 'white',
+        },
+        h2:{
+            color:"red",
+        },
+        bold_text:{
+            color:"green",
+        },
+    };
+
+    const funfun = ()=>{
+        return "메롱";
+    }
+
+    const number = 5;
+
+    //- '변수 counterProps' 내부에 해당 내용의 '객체'를 담음
+    //그리고, '이 객체'를 저~ 아래의 <Counter2 {...counterProps}>에 전달시킴. 'spread 연산자' 참고.
+    //- < 컴퍼넌트에 데이터를 전달하는 방법 props >
+    //  : '자식컴퍼인 컴퍼 Counter2의 매개변수'로
+    //  '부모컴퍼인 컴퍼 App의 js부분에 정의된 변수 counterProps이 담고 있는 객체의 속성 initialValue'를 넣어주면,
+    //  '자식컴퍼인 컴퍼 Counter2의 내부'에서 '그 속성 initialValue'를 사용할 수 있게 됨.
+    //  즉, '자식컴퍼 Counter2'가 '변수 counterProps 객체의 속성 중 initialValue만 쏙 뽑아 쓴 것'임.
+    const counterProps = {
+        a:1,
+        b:2,
+        c:3,
+        d:4,
+        initialValue:5,
+    };
+
+
+//======================================= return문 ===============================================
+//리턴문에 아무것도 작성하지 않으면 에러난다!
+
+
+    return (
+
+        //< 다른 모든 컴퍼넌트를 감쌀 컴퍼넌트인 '컴퍼 Container' >
+        //'컴퍼 App'의 내부에 위치하여, '컴퍼 Container'가 '컴퍼 App 내부의 사용되는 모든 컴퍼넌트들을 감싸는 것(자식컴퍼로 삼는 것)'
+        <Container>
+
+        <div>
+
+    {/*//JSX에서는 'html의 class'를 'className'으로 대신하여 쓴다. bc, 'jsx'는 'class'가 'js의 예약어'이기 때문에 사용되지 못함*/}
+    {/*//<div className="App">*/}
+
+    {/*    */}
+    {/*  //=============================================================================================================*/}
+
+    {/*  //'함수 App의 내부'에 작성한 'css의 인라인 스타일 중에서 App 속성'을 적용한 것*/}
+    {/*  // <div style = {style.App}>*/}
+
+
+
+    {/*  /!*===============================================================================*!/*/}
+
+
+          {/*'MyHeader.js 파일(=MyHeader 컴퍼넌트)'의 내부 모든 실행문들을 바로 아래 이 태그 하나로 한 번에 퉁쳐서 가져오는 것*/}
+          <MyHeader />
+
+
+          {/*'Counter.js 파일(=Counter 컴퍼넌트)'의 내부 모든 실행문들을 바로 아래 이 태그 하나로 한 번에 퉁쳐서 가져오는 것*/}
+          <Counter />
+
+
+          {/*'Counter.js 파일(=Counter 컴퍼넌트)'의 내부 모든 실행문들을 바로 아래 이 태그 하나로 한 번에 퉁쳐서 가져오는 것*/}
+          {/* [ 컴포넌트에 데이터를 '객체'로 전달하는 방법 props ]
+           - 사용되는 상황:
+           1)초기값을 5로 준 경우(='사용자 임의 속성 intialValue'을 5로 설정한 경우)
+            '컴퍼넌트 App'에서 '컴퍼넌트 Counter2'를 임포트해와 사용하는데, 이 때 'Counter2의 초기값'을 '0'이 아닌,
+            '다른 값(컴퍼넌트 App이 자체적으로 전달하는 값)'으로 사용하라고 명령할 때 등의 상황에서 사용함
+             (여기서는 '초기값을 5'로 주었음)*/}
+          {/*다만, 아래처럼 작성하면 길어질 수 있으니, '위 js 부분'에서 해당 내용의 '객체'를 '변수 counterProps'에 담아 정의하고,
+          그 객체를 여기 return문에서 사용하기(=전달하기)! 'spread 연산자'를 사용하였음 */}
+          {/*<Counter2 initialValue={5}/>*/}
+            <Counter2 {...counterProps}/>
+
+
+
+           {/*
+           2)'속성 a의 값을 1로, b의 값을 2로, c의 값을 3으로, d의 값을 4로 주고', '초기값도 5로 준 경우'
+           : '함수 Counter2가 호출될 때마다', '화면의 개발자도구'의 콘솔 창에 보여지는 출력값'
+           : { a:1, initialValue:5, b:2, c:3, d:4 } */}
+          {/*<Counter2  a={1} initialValue={5} b={2} c={3} d={4}/>*/}
+
+
+    {/*  /!*===============================================================================*!/*/}
+
+
+    {/*  /!*'css의 외부 스타일'을 적용한 것*!/*/}
+    {/*  /!*<h2>안녕 리액트 {name}</h2>*!/*/}
+
+
+    {/*  /!*===============================================================================*!/*/}
+
+
+    {/*    /!*'함수 App의 'js 부분에 작성한 스타일'을 'css의 인라인 스타일로 적용'한 것*!/*/}
+    {/*    /!*'변수 name' 대신에 그냥 모든 것 다 입력해도 됨.*/}
+    {/*      e.g: '1+2'를 입력해도 되고, '아무렇게나 dljalkgjl'를 입력해도 되고, 그 자리에*/}
+    {/*      'js 부분에서 작성한 함수를 호출'해도 됨*/}
+    {/*      js 부분에서 작성한 함수 호출 e.g:*/}
+    {/*      <h2 style={style.h2}>안녕 리액트 {funfun()}*!/*/}
+    {/*     <h2 style={style.h2}>안녕 리액트 {name}</h2>*/}
+
+
+    {/*  /!*===============================================================================*!/*/}
+
+
+      {/*/!*'css의 외부 스타일'을 적용한 것*!/*/}
+    {/*  /!*  /!*<b> 태그: 글자를 굵게 하는 태그 *!/*!/*/}
+    {/*  /!*  <b id='bold_text'>React.js</b>*!/*/}
+
+
+    {/*  /!*===============================================================================*!/*/}
+
+
+    {/*      /!*'js부분에 작성한 스타일'을 'css의 인라인 스타일로 적용'한 것    *!/*/}
+    {/*      <b style={style.bold_text} id="bold_text">*/}
+
+    {/*          /!*'js 부분에 작성한 변수 number'를 2로 나눈 나머지가 0이라면, '짝수'를 리턴,*/}
+    {/*              0이 아니라면 '홀수'를 리턴*!/*/}
+    {/*          {number}는 : {number % 2 === 0 ? "짝수" : "홀수"}*/}
+    {/*      </b>*/}
+
+        </div>
+        </Container>
   );
 }
 
-export default App;
+
+
+export default App; //'App.js'를 내보내는 것. 이제, 다른 파일들에서 'App.js'를 임포트하에 '함수 App'의 내부 로직을 실행시킬 수 있음.
